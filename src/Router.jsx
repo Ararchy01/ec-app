@@ -1,13 +1,15 @@
 import React from 'react';
 import {Route, Switch} from 'react-router';
-import {Home, SignUp, SignIn} from './templates';
+import Auth from './Auth';
+import {Home, SignUp, SignIn, ResetPassword} from './templates';
 
 const Router = () => {
   return (
     <Switch>
       <Route exact path={"/signup"} component={SignUp} />
       <Route exact path={"/signin"} component={SignIn} />
-      <Route exact path={"(/)?"} component={Home} />
+      <Route exact path={"/resetPassword"} component={ResetPassword} />
+      <Auth><Route exact path={"(/)?"} component={Home} /></Auth>
     </Switch>
   )
 }
