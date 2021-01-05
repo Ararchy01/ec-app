@@ -1,12 +1,14 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
+import { ImageArea } from '../components/products';
 import { TextInput, Spacer, SelectBox, PrimaryButton } from '../components/uikit';
 import { registerProduct } from '../reducks/products/operations';
 
 const ProductRegistration = () => {
   const dispatch = useDispatch();
 
-  const [name, setName] = useState(""),
+  const [images, setImages] = useState([]),
+        [name, setName] = useState(""),
         [description, setDescription] = useState(""),
         [category, setCategory] = useState(""),
         [gender, setGender] = useState(""),
@@ -15,9 +17,11 @@ const ProductRegistration = () => {
   const inputName = useCallback((event) => {
     setName(event.target.value);
   }, [setName]);
+
   const inputDescription = useCallback((event) => {
     setDescription(event.target.value);
   }, [setDescription]);
+  
   const inputPrice = useCallback((event) => {
     setPrice(event.target.value);
   }, [setPrice]);
@@ -38,6 +42,7 @@ const ProductRegistration = () => {
       <h2 className="u-text__headline u-text-center">Product Registration</h2>
       <div className="c-section-container">
         <Spacer />
+        <ImageArea images={images} setImages={setImages} />
         <TextInput
           fullWidth={true} label={"Name"} multiline={false} required={true}
           rows={1} value={name} type={"text"} onChange={inputName}
@@ -58,7 +63,7 @@ const ProductRegistration = () => {
         />
         <Spacer />
         <div className="center">
-          <PrimaryButton label="Register" onClick={() => dispatch(registerProduct(name, description, category, gender, price))}/>
+          <PrimaryButton label="Register" onClick={() => dispatch(registerProduct(name, description, category, gender, price, images))}/>
         </div>
       </div>
     </section>
