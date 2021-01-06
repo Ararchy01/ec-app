@@ -63,7 +63,10 @@ const ProductRegistration = () => {
         />
         <Spacer />
         <div className="center">
-          <PrimaryButton label="Register" onClick={() => dispatch(registerProduct(name, description, category, gender, price, images))}/>
+          <PrimaryButton 
+            label="Register" 
+            onClick={() => dispatch(registerProduct(name, description, category, gender, price, images))}
+          />
         </div>
       </div>
     </section>
