@@ -11,7 +11,7 @@ const Router = () => {
       <Route exact path={"/resetPassword"} component={ResetPassword} />
       <Auth>
         <Route exact path={"(/)?"} component={Home} />
-        <Route exact path={"/product/register"} component={ProductRegistration} />
+        <Route exact path={"/product/register(/:id)?"} component={ProductRegistration} />
       </Auth>
     </Switch>
   )

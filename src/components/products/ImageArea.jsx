@@ -33,7 +33,7 @@ const ImageArea = (props) => {
         props.setImages((prevState) => [...prevState, newImage]);
       })
     })
-  }, [props.setImages]);
+  }, [props]);
 
   const removeImage = useCallback(async (id) => {
     const ret = window.confirm('Are you sure you want to remove this image?');
@@ -44,7 +44,7 @@ const ImageArea = (props) => {
     } else {
       return false;
     }
-  }, [props.images]);
+  }, [props]);
 
   return (
     <div>
