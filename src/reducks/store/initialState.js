@@ -3,11 +3,11 @@ const initialState = {
     isSignedIn: false,
     role: "",
     uid: "",
-    username: ""
+    username: "",
   },
   products: {
-    list: []
-  }
-}
+    list: [],
+  },
+};
 
-export default initialState
+export default initialState;
