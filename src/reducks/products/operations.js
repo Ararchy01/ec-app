@@ -24,6 +24,7 @@ export const addProduct = (
       created_at: timestamp,
       updated_at: timestamp,
     };
+    console.log("REGISTER");
 
     return productsTable
       .add(data)
@@ -45,6 +46,7 @@ export const updateProduct = (
   price,
   images
 ) => {
+  console.log("UPDATE");
   return async (dispatch) => {
     const timestamp = FirebaseTimestamp.now();
 
@@ -60,7 +62,7 @@ export const updateProduct = (
 
     return productsTable
       .doc(id)
-      .set(data)
+      .set(data, { merge: true })
       .then(() => {
         dispatch(push("/"));
       })

@@ -8,17 +8,16 @@ import {
   PrimaryButton,
 } from "../components/uikit";
 import { db } from "../firebase";
-import { addProduct } from "../reducks/products/operations";
+import { addProduct, updateProduct } from "../reducks/products/operations";
 
 const ProductRegistration = () => {
   const dispatch = useDispatch();
   let id = window.location.pathname.split("/product/register")[1];
+  let isUpdate = id !== "" && id !== "/";
 
-  if (id !== "") {
+  if (isUpdate) {
     id = id.split("/")[1];
   }
-
-  const buttonLabel = id === "" ? "register" : "update";
 
   const [images, setImages] = useState([]),
     [name, setName] = useState(""),
@@ -61,7 +60,7 @@ const ProductRegistration = () => {
   ];
 
   useEffect(() => {
-    if (id !== "") {
+    if (isUpdate) {
       db.collection("products")
         .doc(id)
         .get()
@@ -73,9 +72,13 @@ const ProductRegistration = () => {
           setImages(data.images);
           setName(data.name);
           setPrice(data.price);
+        })
+        .catch(() => {
+          id = "";
+          isUpdate = false;
         });
     }
-  }, [id]);
+  }, [id, isUpdate]);
 
   return (
     <section>
@@ -129,14 +132,33 @@ const ProductRegistration = () => {
         />
         <Spacer />
         <div className="center">
-          <PrimaryButton
-            label={buttonLabel}
-            onClick={() =>
-              dispatch(
-                addProduct(name, description, category, gender, price, images)
-              )
-            }
-          />
+          {isUpdate ? (
+            <PrimaryButton
+              label="Update"
+              onClick={() =>
+                dispatch(
+                  updateProduct(
+                    id,
+                    name,
+                    description,
+                    category,
+                    gender,
+                    price,
+                    images
+                  )
+                )
+              }
+            />
+          ) : (
+            <PrimaryButton
+              label="Register"
+              onClick={() =>
+                dispatch(
+                  addProduct(name, description, category, gender, price, images)
+                )
+              }
+            />
+          )}
         </div>
       </div>
     </section>
