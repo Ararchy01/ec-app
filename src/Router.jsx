@@ -2,11 +2,11 @@ import React from "react";
 import { Route, Switch } from "react-router";
 import Auth from "./Auth";
 import {
-  Home,
   SignUp,
   SignIn,
   ResetPassword,
   ProductRegistration,
+  ProductList,
 } from "./templates";
 
 const Router = () => {
@@ -16,7 +16,7 @@ const Router = () => {
       <Route exact path={"/signin"} component={SignIn} />
       <Route exact path={"/resetPassword"} component={ResetPassword} />
       <Auth>
-        <Route exact path={"(/)?"} component={Home} />
+        <Route exact path={"(/)?"} component={ProductList} />
         <Route
           path={"/product/register(/:id)?"}
           component={ProductRegistration}

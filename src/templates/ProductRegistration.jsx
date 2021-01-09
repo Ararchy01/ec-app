@@ -72,10 +72,6 @@ const ProductRegistration = () => {
           setImages(data.images);
           setName(data.name);
           setPrice(data.price);
-        })
-        .catch(() => {
-          id = "";
-          isUpdate = false;
         });
     }
   }, [id, isUpdate]);
