@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -7,6 +7,10 @@ import Typography from "@material-ui/core/Typography";
 import NoImage from "../../assets/img/src/no_image.png";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
+import IconButton from "@material-ui/core/IconButton";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,10 +44,21 @@ const useStyles = makeStyles((theme) => ({
 const ProductCard = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const images = props.images.length > 0 ? props.images : [{ path: NoImage }];
   const price = props.price.toLocaleString();
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} key={props.id}>
       <CardMedia
         image={images[0].path}
         className={classes.media}
@@ -59,6 +74,28 @@ const ProductCard = (props) => {
         <Typography component="p" className={classes.price}>
           ${price}
         </Typography>
+        <>
+          <IconButton onClick={handleClick}>
+            <MoreVertIcon />
+          </IconButton>
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem
+              onClick={() => {
+                dispatch(push("/product/register/" + props.id));
+                handleClose();
+              }}
+            >
+              Edit
+            </MenuItem>
+            <MenuItem>Delete</MenuItem>
+          </Menu>
+        </>
       </CardContent>
     </Card>
   );

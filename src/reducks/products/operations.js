@@ -82,6 +82,7 @@ export const fetchProducts = () => {
         const productList = [];
         snapshots.forEach((snapshot) => {
           const product = snapshot.data();
+          product.id = snapshot.id;
           productList.push(product);
         });
         dispatch(fetchProductsAction(productList));
