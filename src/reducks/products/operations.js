@@ -1,6 +1,6 @@
 import { push } from "connected-react-router";
 import { db, FirebaseTimestamp } from "../../firebase";
-import { fetchProductsAction } from "./actions";
+import { fetchProductsAction, deleteProductAction } from "./actions";
 
 const productsTable = db.collection("products");
 
@@ -86,6 +86,19 @@ export const fetchProducts = () => {
           productList.push(product);
         });
         dispatch(fetchProductsAction(productList));
+      });
+  };
+};
+
+export const deleteProduct = (id) => {
+  return async (dispatch, getState) => {
+    productsTable
+      .doc(id)
+      .delete()
+      .then(() => {
+        const prevList = getState().products.list;
+        const newList = prevList.filter((product) => product.id !== id);
+        dispatch(deleteProductAction(newList));
       });
   };
 };
