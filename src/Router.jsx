@@ -7,6 +7,7 @@ import {
   ResetPassword,
   ProductRegistration,
   ProductList,
+  ProductDetail,
 } from "./templates";
 
 const Router = () => {
@@ -17,6 +18,7 @@ const Router = () => {
       <Route exact path={"/resetPassword"} component={ResetPassword} />
       <Auth>
         <Route exact path={"(/)?"} component={ProductList} />
+        <Route exact path={"/product/:id"} component={ProductDetail} />
         <Route
           path={"/product/register(/:id)?"}
           component={ProductRegistration}
