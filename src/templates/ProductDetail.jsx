@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { db } from "../firebase";
 import Spacer from "../components/uikit/Spacer";
+import ImageSwiper from "../components/products/ImageSwiper";
 
 const useStyles = makeStyles((theme) => ({
   slideBox: {
@@ -59,7 +60,9 @@ const ProductDetail = () => {
     <section className="c-section-wrapin">
       {product && (
         <div className="p-grid__row">
-          <div className={classes.slideBox}></div>
+          <div className={classes.slideBox}>
+            <ImageSwiper images={product.images} />
+          </div>
           <div className={classes.detail}>
             <h2 className="u-text__headline">{product.name}</h2>
             <p className={classes.price}>${product.price.toLocaleString()}</p>
