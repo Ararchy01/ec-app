@@ -2,16 +2,17 @@ import React from "react";
 import { makeStyles } from "@material-ui/styles";
 import AppBar from "@material-ui/core/Toolbar";
 import Toolbar from "@material-ui/core/Toolbar";
-import logo from "../../assets/img/icons/logo.png";
-import { useSelector } from "react-redux";
+import logo from "../../assets/img/icons/arakiengineering.png";
+import { useDispatch, useSelector } from "react-redux";
 import { getIsSignedIn } from "../../reducks/users/selectors";
+import { push } from "connected-react-router";
 
 const useStyles = makeStyles({
   root: {
     flexGrow: 1,
   },
   menuBar: {
-    backgroundColor: "#03446e",
+    backgroundColor: "#ff04",
     color: "#444",
   },
   toolBar: {
@@ -26,13 +27,22 @@ const useStyles = makeStyles({
 
 const Header = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const selector = useSelector((state) => state);
   const isSignedIn = getIsSignedIn(selector);
 
   return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.menuBar}>
-        <Toolbar className={classes.toolBar}></Toolbar>
+        <Toolbar className={classes.toolBar}>
+          <img
+            src={logo}
+            alt="Logo"
+            width="100px"
+            margin="2 auto"
+            onClick={() => dispatch(push("/"))}
+          />
+        </Toolbar>
       </AppBar>
     </div>
   );
