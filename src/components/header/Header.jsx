@@ -24,6 +24,9 @@ const useStyles = makeStyles({
   iconButtons: {
     margin: "0 0 0 auto",
   },
+  imgWrap: {
+    margin: "5px",
+  },
 });
 
 const Header = () => {
@@ -36,13 +39,14 @@ const Header = () => {
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.menuBar}>
         <Toolbar className={classes.toolBar}>
-          <img
-            src={logo}
-            alt="Logo"
-            width="100px"
-            margin="2 auto"
-            onClick={() => dispatch(push("/"))}
-          />
+          <div className={classes.imgWrap}>
+            <img
+              src={logo}
+              alt="Logo"
+              width="50px"
+              onClick={() => dispatch(push("/"))}
+            />
+          </div>
           {isSignedIn && (
             <div className={classes.iconButtons}>
               <HeaderMenus />
