@@ -6,6 +6,7 @@ import logo from "../../assets/img/icons/arakiengineering.png";
 import { useDispatch, useSelector } from "react-redux";
 import { getIsSignedIn } from "../../reducks/users/selectors";
 import { push } from "connected-react-router";
+import HeaderMenus from "./HeaderMenus";
 
 const useStyles = makeStyles({
   root: {
@@ -42,6 +43,11 @@ const Header = () => {
             margin="2 auto"
             onClick={() => dispatch(push("/"))}
           />
+          {isSignedIn && (
+            <div className={classes.iconButtons}>
+              <HeaderMenus />
+            </div>
+          )}
         </Toolbar>
       </AppBar>
     </div>
