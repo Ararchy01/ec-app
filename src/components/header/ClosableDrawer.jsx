@@ -13,6 +13,9 @@ import PersonIcon from "@material-ui/icons/Person";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { TextInput } from "../uikit";
 import { ListItemIcon } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import { push } from "connected-react-router";
+import { signOut } from "../../reducks/users/operations";
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -35,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 const ClosableDrawer = (props) => {
   const classes = useStyles();
   const { container } = props;
+  const dispatch = useDispatch();
 
   const [keyword, setKeyword] = useState("");
 
@@ -44,6 +48,46 @@ const ClosableDrawer = (props) => {
     },
     [setKeyword]
   );
+
+  const selectMenu = (event, path) => {
+    if (typeof path === String) {
+      dispatch(push(path));
+    } else {
+      dispatch(path);
+    }
+    props.onClose(event);
+  };
+
+  const menus = [
+    {
+      func: selectMenu,
+      label: "Register Product",
+      icon: <AddCircleIcon />,
+      id: "register",
+      value: "/product/register",
+    },
+    {
+      func: selectMenu,
+      label: "History",
+      icon: <HistoryIcon />,
+      id: "history",
+      value: "/order/history",
+    },
+    {
+      func: selectMenu,
+      label: "Profile",
+      icon: <PersonIcon />,
+      id: "profile",
+      value: "/user/profile",
+    },
+    {
+      func: selectMenu,
+      label: "Sign Out",
+      icon: <ExitToAppIcon />,
+      id: "signout",
+      value: signOut(),
+    },
+  ];
 
   return (
     <nav className={classes.drawer}>
@@ -73,12 +117,16 @@ const ClosableDrawer = (props) => {
           </div>
           <Divider />
           <List>
-            <ListItem button key="logout">
-              <ListItemIcon>
-                <ExitToAppIcon />
-              </ListItemIcon>
-              <ListItemText primary="Logout" />
-            </ListItem>
+            {menus.map((menu) => (
+              <ListItem
+                button
+                key={menu.id}
+                onClick={(event) => menu.func(event, menu.value)}
+              >
+                <ListItemIcon>{menu.icon}</ListItemIcon>
+                <ListItemText primary={menu.label} />
+              </ListItem>
+            ))}
           </List>
         </div>
       </Drawer>
