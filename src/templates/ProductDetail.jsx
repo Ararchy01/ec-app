@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/styles";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { db } from "../firebase";
+import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { db, FirebaseTimestamp } from "../firebase";
 import Spacer from "../components/uikit/Spacer";
 import ImageSwiper from "../components/products/ImageSwiper";
 
@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   price: {
     fontSize: 36,
+    color: "red",
   },
   description: {
     whiteSpace: "pre-wrap",
@@ -41,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ProductDetail = () => {
   const selector = useSelector((state) => state);
+  const dispatch = useDispatch();
   const id = selector.router.location.pathname.split("/product/")[1];
   const classes = useStyles();
 
@@ -55,6 +57,17 @@ const ProductDetail = () => {
         setProduct(data);
       });
   }, [id]);
+
+  const addProduct = useCallback(() => {
+    const timestamp = FirebaseTimestamp.now();
+    dispatch(
+      addProductCard({
+        added_at: timestamp,
+        product: product,
+        quantity: 1,
+      })
+    );
+  }, [product]);
 
   return (
     <section className="c-section-wrapin">
